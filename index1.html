@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator Using Nodejs </title>
+<style>
+  
+*{ 
+    box-sizing: border-box;
+}
+
+/* Header content */
+.header{    
+    padding: 8px; 
+    font-weight: 800;
+    font-family: sans-serif; 
+    text-align:center;
+    margin-top: 2px;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    color: rgba(4, 11, 12, 0.842);
+    letter-spacing: 1px;
+    border-bottom: 4px solid rgb(250, 35, 100);;
+    margin-bottom: 20px;
+} 
+
+label {
+            display: inline-block;
+            font-weight: bold;
+            margin-right: 70%;
+            font-size: 120%;
+            font-family: Cambria;
+}
+
+input[type=text] {
+            width: 95%;
+            padding: 12px 20px;
+            margin: 6px;
+            box-sizing: border-box;
+            border-style: double;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+
+/* For buttons */
+input[type=button] {
+  width: 10%;
+  height: 45px;
+  background-color: red;
+  padding: 6px 12px;
+  color: white;
+  margin: 8px 0;
+  margin-top: 0px;
+  border: none;
+  border-radius: 55%;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+button.btn-0{
+  width: 15%;
+  height: 40px;
+  background-color: red;
+  padding: 6px 12px;
+  color: white;
+  margin: 3px 0;
+  margin-top: 0px;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Buttons Hover*/
+input[type=button]:hover {
+  background-color: #d30c0c;
+}
+
+button[type=reset]:hover {
+    background-color: #d30c0c;
+  }
+
+  button[type=submit]:hover {
+    background-color: #d30c0c;
+  }
+/* For calculator box */
+.container {
+  border-radius: 5px;
+  background-color: rgba(241, 237, 237, 0.973);
+  padding: 20px;
+  width: 50%;
+  height: 420px;
+  margin-top: 70px;
+  margin-left: 300px;
+  border-radius: 8px;
+  box-shadow:7px 9px 10px #beb4b4
+}
+
+/* mouse over link */
+a:hover {
+        color: #f1101c;
+      }
+
+@media screen and (max-width: 750px) {
+            .container {
+                width: 50%;
+                height: 520px;
+                text-align: center;
+            }
+          }
+</style>
+</head>
+<body style='background-color:rgb(25, 154, 172)'>
+    <div class="container">
+    <h1 class="header">CALCULATOR</h1>
+    <form method="post" action="/equals" target="result" name="form1">
+        <center>
+        <label for="fstBox">Enter Expression:</label>
+        <input type="text" id="nm1" required name="num1" placeholder="Enter Operation" title="Please Enter Numeric Only">
+        <br>
+         <!--For creating buttons-->
+        <input type="button" onclick="getval(this.value)" value="+">
+        <input type="button" onclick="getval(this.value)" value="-">
+        <input type="button" onclick="getval(this.value)" value="/" >
+        <input type="button" onclick="getval(this.value)" value="%" >
+        <input type="button" onclick="getval(this.value)" value="^">
+        <input type="button" onclick="getval(this.value)" value="*">
+    </center>
+         <br>
+         <center>
+         <button class="btn-0" type="reset" id="resetBtn" onclick="clearInput()" >AC</button>
+         <button class="btn-0" type="submit" name="res" id="output-btn" formaction="/equals" >=</button>
+         </form><br>
+         <iframe name="result"  width= "95%" id="frame" height= '40'frameborder="20px" style="background-color: pink; border-radius: 30px; margin-top: 30px;">
+        </iframe>
+    <a href="/index">  View History </a>
+    </center> 
+    
+    </div>
+</body>
+
+
+<script>
+
+    //  For Clear Screen
+    document.getElementById("resetBtn").addEventListener("click", clear);
+ function clearInput() {
+           window.location.reload();
+ }
+ function getval(val) {
+           document.getElementById("output-btn").value = val;
+            vals = document.getElementById("nm1").value;
+            document.getElementById("nm1").value = vals + val;
+            document.getElementById("resul").src = " ";
+            document.getElementById("nm1").focus();
+        }
+
+  // Broadcast for one who were opening or using a page/URL.
+  window.localStorage.setItem('openOnePage', Date.now());
+  var onLocalStorageEvent = function(e){
+    
+   if(e.key == "openOnePage"){
+       //Listen if another one is opening tha same URL at same time. 
+        window.localStorage.setItem('pageAlreadyOpen', Date.now());
+        }
+        
+        if(e.key == "pageAlreadyOpen"){
+                  //For displaying the message using pop up box!!
+                       alert ("Oops!! Please wait this page is already in use");
+            window.location.href="index.ejs";
+            return false;
+        }
+    
+    };		 window.addEventListener('storage', onLocalStorageEvent, false);
+
+//if (isNaN(n1) || isNaN(n2)){
+  //alert("Please Enter Only Number!!")
+  //return;
+//};
+</script>
+
+</html>
